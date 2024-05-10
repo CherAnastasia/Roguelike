@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class RoomInfo//информация о комнате
 {
@@ -20,6 +21,8 @@ public class RoomController : MonoBehaviour
     Queue<RoomInfo> loadRoomQueue = new Queue<RoomInfo>();
     public List<Room> loadRooms = new List<Room>();
     bool isLoadingRoom = false;//загрузочная ли это комната
+    bool spawnedBossRoom = false;
+    bool updateRooms = false;
     void Awake()
     {
         instance = this;
@@ -27,11 +30,11 @@ public class RoomController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LoadRoom("Start",0,0);
-        LoadRoom("Empty", 1, 0);
-        LoadRoom("Empty", -1, 0);
-        LoadRoom("Empty", 0, 1);
-        LoadRoom("Empty", 0, -1);
+        //LoadRoom("Start",0,0);
+        //LoadRoom("Empty", 1, 0);
+        //LoadRoom("Empty", -1, 0);
+        //LoadRoom("Empty", 0, 1);
+        //LoadRoom("Empty", 0, -1);
     }
 
     // Update is called once per frame
@@ -47,12 +50,38 @@ public class RoomController : MonoBehaviour
         }
         if(loadRoomQueue.Count==0)//если количество точек очереди равны нулю
         {
+            if(!spawnedBossRoom)
+            {
+                StartCoroutine(SpawnBossRoom());
+            }
+            else if (spawnedBossRoom && !updateRooms)
+            {
+                foreach(Room room in loadRooms)
+                {
+                    room.RemoveUnconectedDoors();
+                }
+                updateRooms = true;
+            }
             return; //возвращаемся ибо в очереди ничего не будет и нам вообще не нужно ничего делать
         }
         //если в очереди что то есть
         currentLoadRoomData= loadRoomQueue.Dequeue();//удаляем его из очереди
         isLoadingRoom= true;
         StartCoroutine(LoadRoomRoutine(currentLoadRoomData));
+    }
+    IEnumerator SpawnBossRoom()
+    {
+        spawnedBossRoom=true;
+        yield return new WaitForSeconds(0.5f);
+        if(loadRoomQueue.Count==0)
+        {
+            Room bossRoom = loadRooms[loadRooms.Count - 1];
+            Room tempRoom = new Room(bossRoom.X, bossRoom.Y);
+            Destroy(bossRoom.gameObject);
+            var roomToRemove = loadRooms.Single(r => r.X == tempRoom.X && r.Y == tempRoom.Y);
+            loadRooms.Remove(roomToRemove);
+            LoadRoom("End", tempRoom.X, tempRoom.Y);
+        }
     }
     public void LoadRoom(string name, int x, int y)//загружает сцены
     {
@@ -80,26 +109,38 @@ public class RoomController : MonoBehaviour
     }
     public void RegisterRoom(Room room)//поестить комнату в сцену
     {
-        room.transform.position = new Vector3(
-           currentLoadRoomData.X * room.Width,
-           currentLoadRoomData.Y * room.Height,
-           0);
-        room.X= currentLoadRoomData.X;
-        room.Y= currentLoadRoomData.Y;
-        room.name = currentWorldName + "-" + currentLoadRoomData.name + " " + room.X + ", " + room.Y;
-        room.transform.parent = transform;
-        isLoadingRoom= false;
-        if(loadRooms.Count==null)
+        if(!DoesRoomExist(currentLoadRoomData.X,currentLoadRoomData.Y))
         {
-            CameraController.instance.currRoom= room;
+            room.transform.position = new Vector3(
+          currentLoadRoomData.X * room.Width,
+          currentLoadRoomData.Y * room.Height,
+          0);
+            room.X = currentLoadRoomData.X;
+            room.Y = currentLoadRoomData.Y;
+            room.name = currentWorldName + "-" + currentLoadRoomData.name + " " + room.X + ", " + room.Y;
+            room.transform.parent = transform;
+            isLoadingRoom = false;
+            if (loadRooms.Count == 0)
+            {
+                CameraController.instance.currRoom = room;
+            }
+            loadRooms.Add(room);//добавляем комнату в список выделенных комнат
+            //room.RemoveUnconectedDoors();
+        } 
+        else
+        {
+            Destroy(room.gameObject);
+            isLoadingRoom = false;
         }
-
-        loadRooms.Add(room);//добавляем комнату в список выделенных комнат
 
     }
     public bool DoesRoomExist (int x, int y)//сущесвует ли комната
     {
         return loadRooms.Find(item => item.X == x && item.Y == y) != null;
+    }
+    public Room FindRoom(int x, int y)
+    {
+        return loadRooms.Find(item => item.X == x && item.Y == y);
     }
     public void OnPlayerEnterRoom(Room room)
     {

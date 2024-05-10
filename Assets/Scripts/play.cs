@@ -9,12 +9,9 @@ public class play : MonoBehaviour
     public static play instance;//экземпл€р этого же класса
     private static float health =8;//здоровье
     private static int maxHealth=8;//максимальное здоровье
-    //private static float moveSpeed=5f;//скорость перемещени€?
-    //private static float fireRate=0.5f;//скорость стрельбы?
     public static float Health { get => health; set => health = value; }
     public static int MaxHealth { get => maxHealth; set => maxHealth = value; }
-    //public static float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
-    //public static float FireRate { get => fireRate; set => fireRate = value; }
+
     public TextMeshProUGUI healthText;//чтобы выводить здоровье
 
     // Start is called before the first frame update
