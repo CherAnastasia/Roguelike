@@ -18,7 +18,7 @@ public enum EnemyType//виды врагов
 
 public class Enemy : MonoBehaviour
 {
-    GameObject player;//игрок
+    GameObject playerr;//игрок
     public EnemyState currState = EnemyState.Idle;//начальнгое состояния врага ходит бродит
     public EnemyType enemyType;//тип врага
     public float range;//диапазон глаза врага
@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        playerr = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -64,7 +64,7 @@ public class Enemy : MonoBehaviour
             {
                 currState = EnemyState.Wander;
             }
-            if (Vector3.Distance(transform.position, player.transform.position) <= attackRange) //позиция от нас до позиции игрока
+            if (Vector3.Distance(transform.position, playerr.transform.position) <= attackRange) //позиция от нас до позиции игрока
             {
                 currState = EnemyState.Attack;//атакуем
             }
@@ -78,7 +78,7 @@ public class Enemy : MonoBehaviour
     private bool IsPlayerInRange(float range)//игрок в радиусе глаза?
     {
         //позиция от нас до позиции игрока
-        return Vector3.Distance(transform.position, player.transform.position) <= range;//возвращаем расстояние между нашей текущей позицией и позицией игрока
+        return Vector3.Distance(transform.position, playerr.transform.position) <= range;//возвращаем расстояние между нашей текущей позицией и позицией игрока
             //проверяем меньше ли оно диапазону
     }
     /*сопрограмма это метод, который может приостановить выполнение и вернуть управление Unity, 
@@ -87,9 +87,9 @@ public class Enemy : MonoBehaviour
     {
         chooseDir = true;//направление выбранно
         yield return new WaitForSeconds(Random.Range(2f,8f)); //ждем рандомное количество времени между 2 секундами и 8 секундами и возвращаем новые значения (yield return: определяет возвращаемый элемент)
-        randomDir = new Vector3(0, 0, Random.Range(0, 360));//устанавливаем случайное направление
-        Quaternion nextRotation = Quaternion.Euler(randomDir);//для вращениея?
-        transform.rotation = Quaternion.Lerp(transform.rotation, nextRotation, Random.Range(0.5f, 2.5f));//обновляем вращение?
+        //randomDir = new Vector3(0, 0, Random.Range(0, 360));//устанавливаем случайное направление
+        //Quaternion nextRotation = Quaternion.Euler(randomDir);//для вращениея?
+        //transform.rotation = Quaternion.Lerp(transform.rotation, nextRotation, Random.Range(0.5f, 2.5f));//обновляем вращение?
         chooseDir = false;//направление не выбрано
     }
     void Wander()//для гуляющего врага
@@ -106,7 +106,7 @@ public class Enemy : MonoBehaviour
     }
     void Follow()//для приследующего врага
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, playerr.transform.position, speed * Time.deltaTime);
     }
     void Attack()//для атаки
     {
@@ -120,7 +120,7 @@ public class Enemy : MonoBehaviour
                     break;
                 case (EnemyType.Ranged):
                     GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity) as GameObject;//создаем обьект пули
-                    bullet.GetComponent<Bullet>().GetPlayer(player.transform);
+                    bullet.GetComponent<Bullet>().GetPlayer(playerr.transform);
                     bullet.AddComponent<Rigidbody2D>().gravityScale = 0;//устанавливаем графитацию
                     bullet.GetComponent<Bullet>().isEnemyBullet= true;//вражеская пуля
                     StartCoroutine(CoolDown());//перезарядка
@@ -139,7 +139,8 @@ public class Enemy : MonoBehaviour
     }
     public void Death()
     {
-       // RoomController.instance.UpdateRooms();
+        player.numberEnemiesKilled++;//увеличиваем счетчик
+        // RoomController.instance.UpdateRooms();
         RoomController.instance.StartCoroutine(RoomController.instance.RoomCoroutune());
         Destroy(gameObject);//уничтожение врага
     }

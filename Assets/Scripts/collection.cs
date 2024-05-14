@@ -13,7 +13,7 @@ public class collection : MonoBehaviour
 {
     public Item item;
     public float healtChange;//изменение здоровья
-    public int coin;//монета
+    //public int coin;//монета
     // Start is called before the first frame update
     void Start()
     {

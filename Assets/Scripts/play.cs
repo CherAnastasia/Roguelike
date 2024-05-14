@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+//[System.Serializable]
+//public class play
+//{
+//    public string name;//имя
+//    public string description;//описание
+//    public Sprite itemImage;
+//}
 
 public class play : MonoBehaviour
 {
@@ -17,6 +25,7 @@ public class play : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        health = maxHealth;
         if (instance == null)
         {
             instance = this;//экземпляр равен этому сценарию
@@ -42,6 +51,6 @@ public class play : MonoBehaviour
     }
     private static void KillPlayer()
     {
-
+        SceneManager.LoadScene("End");
     }
 }

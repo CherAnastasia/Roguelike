@@ -178,18 +178,18 @@ public class RoomController : MonoBehaviour
                         enemy.notInRoom = true;
                         Debug.Log("Not in room");
                     }
-                    //foreach (Door door in room.GetComponentsInChildren<Door>())
-                    //{
-                    //    door.doorCollider.SetActive(false);
-                    //}
+                    foreach (Door door in room.GetComponentsInChildren<Door>())
+                    {
+                        door.doorCollider.SetActive(false);
+                    }
                 }
-                //else
-                //{
-                //    foreach (Door door in room.GetComponentsInChildren<Door>())
-                //    {
-                //        door.doorCollider.SetActive(false);
-                //    }
-                //}
+                else
+                {
+                    foreach (Door door in room.GetComponentsInChildren<Door>())
+                    {
+                        door.doorCollider.SetActive(false);
+                    }
+                }
             }
             else
             {
@@ -201,22 +201,18 @@ public class RoomController : MonoBehaviour
                         enemy.notInRoom = false;
                         Debug.Log("In in room");
                     }
-                    //foreach (Door door in room.GetComponentsInChildren<Door>())
-                    //{
-                    //    door.doorCollider.SetActive(true);
-                    //}
+                    foreach (Door door in room.GetComponentsInChildren<Door>())
+                    {
+                        door.doorCollider.SetActive(true);
+                    }
                 }
-                //else
-                //{
-                //    //foreach (Door door in room.GetComponentsInChildren<Door>())
-                //    //{
-                //    //    door.doorCollider.SetActive(false);
-                //    //}
-                //    foreach (Door door in room.GetComponentsInChildren<Door>())
-                //    {
-                //        door.doorCollider.SetActive(false);
-                //    }
-                //}
+                else
+                {
+                    foreach (Door door in room.GetComponentsInChildren<Door>())
+                    {
+                        door.doorCollider.SetActive(false);
+                    }
+                }
             }
         }
     }
