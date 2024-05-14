@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum EnemyState //состояния врага
 {
+    Idle,
     Wander,//бродит ходит
     Follow,//следует за нами
     Die,//умер
@@ -18,7 +19,7 @@ public enum EnemyType//виды врагов
 public class Enemy : MonoBehaviour
 {
     GameObject player;//игрок
-    public EnemyState currState = EnemyState.Wander;//начальнгое состояния врага ходит бродит
+    public EnemyState currState = EnemyState.Idle;//начальнгое состояния врага ходит бродит
     public EnemyType enemyType;//тип врага
     public float range;//диапазон глаза врага
     public float speed;//скорость врага
@@ -28,6 +29,7 @@ public class Enemy : MonoBehaviour
     private bool chooseDir = false;//выбор направления
    // private bool dead = false;//враг мертв
     private bool coolDownAttack = false;//время востановления атаки
+    public bool notInRoom = false;
     private Vector3 randomDir;//рандомное направление гуляния
     public GameObject bulletPrefab;
     // Start is called before the first frame update
@@ -41,6 +43,8 @@ public class Enemy : MonoBehaviour
     {
         switch(currState)//в зависимости от состояния
         {
+            //case (EnemyState.Idle)://если гуляет
+            //   /* Idle();*/ break;
             case (EnemyState.Wander)://если гуляет
             Wander(); break;
             case (EnemyState.Follow)://если приследует
@@ -50,17 +54,24 @@ public class Enemy : MonoBehaviour
             case (EnemyState.Attack)://если атакуем
             Attack(); break;
         }
-        if(IsPlayerInRange(range)&& currState!= EnemyState.Die)//если находится в диапазоне глаза+враг жив
+        if(!notInRoom)
         {
-            currState = EnemyState.Follow;
+            if (IsPlayerInRange(range) && currState != EnemyState.Die)//если находится в диапазоне глаза+враг жив
+            {
+                currState = EnemyState.Follow;
+            }
+            else if (!IsPlayerInRange(range) && currState != EnemyState.Die)//если находится за диапазоном глаза+враг жив
+            {
+                currState = EnemyState.Wander;
+            }
+            if (Vector3.Distance(transform.position, player.transform.position) <= attackRange) //позиция от нас до позиции игрока
+            {
+                currState = EnemyState.Attack;//атакуем
+            }
         }
-        else if(!IsPlayerInRange(range) && currState != EnemyState.Die)//если находится за диапазоном глаза+враг жив
+        else
         {
-            currState = EnemyState.Wander;
-        }
-        if (Vector3.Distance(transform.position, player.transform.position) <= attackRange) //позиция от нас до позиции игрока
-        {
-            currState= EnemyState.Attack;//атакуем
+            currState = EnemyState.Idle;
         }
     }
 
@@ -128,6 +139,8 @@ public class Enemy : MonoBehaviour
     }
     public void Death()
     {
+       // RoomController.instance.UpdateRooms();
+        RoomController.instance.StartCoroutine(RoomController.instance.RoomCoroutune());
         Destroy(gameObject);//уничтожение врага
     }
 }
