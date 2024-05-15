@@ -81,7 +81,10 @@ public class RoomController : MonoBehaviour
             Destroy(bossRoom.gameObject);
             var roomToRemove = loadRooms.Single(r => r.X == tempRoom.X && r.Y == tempRoom.Y);
             loadRooms.Remove(roomToRemove);
+            if(Level.level==1)
             LoadRoom("End", tempRoom.X, tempRoom.Y);
+            else
+            LoadRoom("End2", tempRoom.X, tempRoom.Y);
         }
     }
     public void LoadRoom(string name, int x, int y)//загружает сцены
@@ -145,11 +148,20 @@ public class RoomController : MonoBehaviour
     }
     public string GetRandomRoomName()
     {
-        string[] possibleRooms = new string[]
-        {
+            string[] possibleRooms = new string[]
+            {
             "Empty",
             "Basic1"
-        };
+            };
+        if (Level.level!=1)
+        {
+             possibleRooms = new string[]
+            {
+            "Empty2",
+            "Basic2"
+            };
+        }
+
         return possibleRooms[Random.Range(0, possibleRooms.Length)];
     }
     public void OnPlayerEnterRoom(Room room)

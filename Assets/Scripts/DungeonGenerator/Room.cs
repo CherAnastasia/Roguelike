@@ -52,11 +52,18 @@ public class Room : MonoBehaviour
     }
     void Update()
     {
-        if(name.Contains("End")&&!updateDoors)
-        {
-            RemoveUnconectedDoors();
-            updateDoors = true;
-        }
+        if (Level.level == 1)
+            if (name.Contains("End")&&!updateDoors)
+            {
+                RemoveUnconectedDoors();
+                updateDoors = true;
+            }
+       else
+            if (name.Contains("End2") && !updateDoors)
+            {
+                RemoveUnconectedDoors();
+                updateDoors = true;
+            }
     }
 
     public void RemoveUnconectedDoors()

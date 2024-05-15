@@ -4,23 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-//[System.Serializable]
-//public class play
-//{
-//    public string name;//им€
-//    public string description;//описание
-//    public Sprite itemImage;
-//}
 
 public class play : MonoBehaviour
 {
     public static play instance;//экземпл€р этого же класса
+
     private static float health =8;//здоровье
     private static int maxHealth=8;//максимальное здоровье
     public static float Health { get => health; set => health = value; }
     public static int MaxHealth { get => maxHealth; set => maxHealth = value; }
 
     public TextMeshProUGUI healthText;//чтобы выводить здоровье
+    public TextMeshProUGUI levelText;
 
     // Start is called before the first frame update
     void Awake()
@@ -31,11 +26,15 @@ public class play : MonoBehaviour
             instance = this;//экземпл€р равен этому сценарию
         }
     }
+    //void Start()
+    //{
 
+    //}
     // Update is called once per frame
     void Update()
     {
         healthText.text = "Health: " + health;//выводим здоровье
+        levelText.text = "Level - " + (Level.level);
     }
     public static void DamagePlayer(int damage)//урок игроку
     {
@@ -51,6 +50,7 @@ public class play : MonoBehaviour
     }
     private static void KillPlayer()
     {
+        Level.level = 1;
         SceneManager.LoadScene("End");
     }
 }

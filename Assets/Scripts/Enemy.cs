@@ -139,8 +139,9 @@ public class Enemy : MonoBehaviour
     }
     public void Death()
     {
-        player.numberEnemiesKilled++;//увеличиваем счетчик
+        //player.numberEnemiesKilled++;//увеличиваем счетчик
         // RoomController.instance.UpdateRooms();
+
         RoomController.instance.StartCoroutine(RoomController.instance.RoomCoroutune());
         Destroy(gameObject);//уничтожение врага
     }

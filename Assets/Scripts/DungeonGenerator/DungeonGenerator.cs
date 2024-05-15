@@ -13,8 +13,11 @@ public class DungeonGeneration : MonoBehaviour
     }
     private void SpawnRooms(IEnumerable<Vector2Int> rooms)
     {
-        RoomController.instance.LoadRoom("Start", 0, 0);
-        foreach(Vector2Int roomLocation in rooms)
+        if (Level.level == 1)
+            RoomController.instance.LoadRoom("Start", 0, 0);
+        else
+            RoomController.instance.LoadRoom("Start2", 0, 0);
+        foreach (Vector2Int roomLocation in rooms)
         {
                 RoomController.instance.LoadRoom(/*"Basic1"*/RoomController.instance.GetRandomRoomName(), roomLocation.x, roomLocation.y);
         }

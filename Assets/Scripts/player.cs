@@ -10,9 +10,7 @@ public class player : MonoBehaviour
     public float speed;//скорость игрока
     Rigidbody2D rigidbody2D;//игрок
     public TextMeshProUGUI collectedText;
-    public TextMeshProUGUI numberEnemiesKilledText;
     public static int collectedAmount=0;
-    public static int numberEnemiesKilled = 0;
     public GameObject bulletPrefab;//пуля
     public float bulletSpeed;//скорость пули
     private float lasttFire;//последний огонь
@@ -20,7 +18,6 @@ public class player : MonoBehaviour
     void Awake()
     {
         collectedAmount = 0;
-        numberEnemiesKilled = 0;
     }
     // Start is called before the first frame update
     void Start()
@@ -44,7 +41,6 @@ public class player : MonoBehaviour
 
         rigidbody2D.velocity = new Vector3(horizontal*speed, vertical*speed,0);//устанавливаем скорость тела (на z перемещаться нельзя)
         collectedText.text = "Item Collected: " + collectedAmount;//меняем значение текста (меняем количество сьеденных обьектов)
-        numberEnemiesKilledText.text = "Enenies killed: " + numberEnemiesKilled;
     }
 
     void Shoot(float x, float y)//метод стрельбы принимающий в себя верт и гор

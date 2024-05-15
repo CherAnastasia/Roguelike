@@ -14,7 +14,7 @@ public class Door : MonoBehaviour
    public DoorType doorType;
     public GameObject doorCollider;
     private GameObject playerr;
-    private float widthOffset = 3.5f;
+    private float widthOffset =3.5f;
     private void Start()
     {
          playerr = GameObject.FindGameObjectWithTag("Player");

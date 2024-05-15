@@ -7,6 +7,7 @@ public class MenuControls : MonoBehaviour
 {
     public void PlayPressed()
     {
+        Level.level = 1;
         SceneManager.LoadScene("BasementMain");
     }
     public void Exit()
@@ -21,5 +22,9 @@ public class MenuControls : MonoBehaviour
     public void RefusalExit()
     {
         SceneManager.LoadScene("Menu");
+    }
+    public void Record()
+    {
+        SceneManager.LoadScene("Record");
     }
 }
