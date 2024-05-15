@@ -52,5 +52,9 @@ public class Bullet : MonoBehaviour
             play.DamagePlayer(1);//наносим урон
             Destroy(gameObject);//уничтожаем пулю
         }
+        if (collision.tag == "Obstacle")
+        {
+            Destroy(gameObject);//уничтожаем пулю
+        }
     }
 }
