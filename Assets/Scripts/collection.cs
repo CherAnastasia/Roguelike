@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -20,12 +18,6 @@ public class collection : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite=item.itemImage;
         Destroy(GetComponent<PolygonCollider2D>());
         gameObject.AddComponent<PolygonCollider2D>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
     public void OnTriggerEnter2D(Collider2D collision)//метод который работает при триггере (принимает в себя столкновение)
     {

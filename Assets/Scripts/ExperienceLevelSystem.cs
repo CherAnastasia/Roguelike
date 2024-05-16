@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +8,7 @@ public class ExperienceLevelSystem : MonoBehaviour
     static int record;
     void Awake()
     {
-        //record = 0;
+        record = PlayerPrefs.GetInt("RecordPlayer");
     }
     void Start()
     {
@@ -23,12 +21,13 @@ public class ExperienceLevelSystem : MonoBehaviour
     }
     public static void UpdatedRecord(int level)
     {
+        record = PlayerPrefs.GetInt("RecordPlayer");
             if (level > record)
             {
                 record = (level);
                 Debug.Log("New record!");
-             }
-        SaveRecord();
+                SaveRecord();
+            }
     }
 
     public static void SaveRecord()

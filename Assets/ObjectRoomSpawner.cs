@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectRoomSpawner : MonoBehaviour
@@ -12,10 +10,6 @@ public class ObjectRoomSpawner : MonoBehaviour
     }
     public GridController grid;
     public RandomSpawner[] spawnerData;
-    void Start()
-    {
-        //grid = GetComponentInChildren<GridController>();
-    }
     public void InitialiseObjectSpawning()
     {
         foreach(RandomSpawner rs in spawnerData)
