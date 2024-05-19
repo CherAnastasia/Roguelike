@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public enum EnemyState //состояния врага
 {
@@ -12,7 +13,8 @@ public enum EnemyState //состояния врага
 public enum EnemyType//виды врагов
 {
     Melee,//ближний боец
-    Ranged//стрелок
+    Ranged,//стрелок
+    Boss
 };
 
 public class Enemy : MonoBehaviour
@@ -23,7 +25,7 @@ public class Enemy : MonoBehaviour
     public float range;//диапазон глаза врага
     public float speed;//скорость врага
     public float attackRange;//диапазон атаки
-   // public float bulletSpeed;//скорость пули
+   //public float bulletSpeed;//скорость пули
     public float coolDown;//время востановления
     private bool chooseDir = false;//выбор направления
    // private bool dead = false;//враг мертв
@@ -31,7 +33,16 @@ public class Enemy : MonoBehaviour
     public bool notInRoom = false;
     private Vector3 randomDir;//рандомное направление гуляния
     public GameObject bulletPrefab;
+    public bool isBoss;
+    private static float health = 8;//здоровье
+    private static int maxHealth = 8;//максимальное здоровье
+    public static float Health { get => health; set => health = value; }
+    public static int MaxHealth { get => maxHealth; set => maxHealth = value; }
     // Start is called before the first frame update
+    void Awake()
+    {
+        health = maxHealth;
+    }
     void Start()
     {
         playerr = GameObject.FindGameObjectWithTag("Player");
@@ -42,8 +53,6 @@ public class Enemy : MonoBehaviour
     {
         switch(currState)//в зависимости от состояния
         {
-            //case (EnemyState.Idle)://если гуляет
-            //   /* Idle();*/ break;
             case (EnemyState.Wander)://если гуляет
             Wander(); break;
             case (EnemyState.Follow)://если приследует
@@ -124,6 +133,13 @@ public class Enemy : MonoBehaviour
                     bullet.GetComponent<Bullet>().isEnemyBullet= true;//вражеская пуля
                     StartCoroutine(CoolDown());//перезарядка
                     break;
+                case (EnemyType.Boss):
+                    GameObject bullet1 = Instantiate(bulletPrefab, transform.position, Quaternion.identity) as GameObject;//создаем обьект пули
+                    bullet1.GetComponent<Bullet>().GetPlayer(playerr.transform);
+                    bullet1.AddComponent<Rigidbody2D>().gravityScale = 0;//устанавливаем графитацию
+                    bullet1.GetComponent<Bullet>().isEnemyBullet = true;//вражеская пуля
+                    StartCoroutine(CoolDown());//перезарядка
+                    break;
             }
 
         }
@@ -143,5 +159,19 @@ public class Enemy : MonoBehaviour
 
         RoomController.instance.StartCoroutine(RoomController.instance.RoomCoroutune());
         Destroy(gameObject);//уничтожение врага
+        if(enemyType==EnemyType.Boss)
+        {
+            play.instance.port.SetActive(true);
+            play.instance.port.transform.position =transform.position;
+        }
+        else play.instance.port.SetActive(false);
+    }
+    public void DamageBoos(int damage)//урон
+    {
+        health -= damage;//уздоровья минусуем дамаг
+        if (Health <= 0)//если здоровье отрицательно или равно 0
+        {
+            Death();//убиваем 
+        }
     }
 }

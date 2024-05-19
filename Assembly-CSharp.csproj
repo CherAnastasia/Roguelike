@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\DungeonGenerator\RoomController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\MenuControls.cs" />
+    <Compile Include="Assets\HearthBoss.cs" />
     <Compile Include="Assets\Scripts\Spawner\SpawnerData.cs" />
     <Compile Include="Assets\Scripts\play.cs" />
     <Compile Include="Assets\Scripts\ItemSpawner.cs" />

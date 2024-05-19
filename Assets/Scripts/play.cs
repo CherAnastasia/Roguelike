@@ -13,6 +13,7 @@ public class play : MonoBehaviour
 
     public TextMeshProUGUI healthText;//чтобы выводить здоровье
     public TextMeshProUGUI levelText;
+    public GameObject port;
 
     // Start is called before the first frame update
     void Awake()

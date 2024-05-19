@@ -17,14 +17,15 @@ public class Level : MonoBehaviour
             if (collision.tag == "Player" && level == 1)
             {
                 SceneManager.LoadScene("BasementMain2");
-                ExperienceLevelSystem.UpdatedRecord(level);
+                ExperienceLevelSystem.UpdatedRecord(level);          
+                level++;
             }
             if (collision.tag == "Player" && level == 2)
             {
                 SceneManager.LoadScene("EndLevels");
                 ExperienceLevelSystem.UpdatedRecord(level);
             }
-            level++;
+
         }
         trig = false;
     }

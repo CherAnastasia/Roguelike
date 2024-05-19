@@ -169,7 +169,7 @@ public class RoomController : MonoBehaviour
     {
         foreach(Room room in loadRooms)
         {
-            if(currRom!=room)
+            if (currRom!=room)
             {
                 Enemy[] enemies = room.GetComponentsInChildren<Enemy>();
                 if(enemies!=null)

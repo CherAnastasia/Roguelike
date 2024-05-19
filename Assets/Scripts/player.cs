@@ -10,7 +10,7 @@ public class player : MonoBehaviour
     public GameObject bulletPrefab;//пул€
     public float bulletSpeed;//скорость пули
     private float lasttFire;//последний огонь
-    public float fireDelay;//задержка огн€
+    public float fireDelay;
     void Awake()
     {
         collectedAmount = 0;
@@ -19,6 +19,7 @@ public class player : MonoBehaviour
     void Start()
     {
         rigidbody2D= GetComponent<Rigidbody2D>();//оюьект твердое тело
+       
     }
 
     // Update is called once per frame
@@ -26,7 +27,7 @@ public class player : MonoBehaviour
     {
         float horizontal = Input.GetAxis("Horizontal");//горизонстальна€ ось дл€ игрока (реагирует на a d)
         float vertical = Input.GetAxis("Vertical");//вертикальна€ ось дл€ игрока (реагирует на w s)
-
+        
         float shootHor = Input.GetAxis("ShootHorizontal");//горизонстальна€ ось дл€ пули (ось которую мы сами сделали) (реагирует на право лево)
         float shootVert = Input.GetAxis("ShootVertical");//вертикальна€ ось дл€ пули (ось которую мы сами сделали) (реагирует на низ вверх)
         if ((shootHor!=0 || shootVert!=0) && Time.time>lasttFire+fireDelay)//провер€ем получем ли мы верт или гориз данные + больше ли это чем наша задержка+последний огонь 

@@ -43,8 +43,16 @@ public class Bullet : MonoBehaviour
     {
         if(collision.tag == "Enemy" && !isEnemyBullet)//если это враг и это не вражеская пуля
         {
-            collision.gameObject.GetComponent<Enemy>().Death(); //убить врага   
-            Destroy(gameObject);//уничтожение пули
+            if(collision.gameObject.GetComponent<Enemy>().isBoss)
+            {
+                collision.gameObject.GetComponent<Enemy>().DamageBoos(1); //убить врага   
+                Destroy(gameObject);//уничтожение пули
+            }
+            else
+            {
+                collision.gameObject.GetComponent<Enemy>().Death(); //убить врага   
+                Destroy(gameObject);//уничтожение пули
+            }
         }
         if(collision.tag == "Player" && isEnemyBullet) //если это игрок и это вражеская пуля
         {
