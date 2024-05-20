@@ -11,7 +11,7 @@ public class play : MonoBehaviour
     public static float Health { get => health; set => health = value; }
     public static int MaxHealth { get => maxHealth; set => maxHealth = value; }
 
-    public TextMeshProUGUI healthText;//чтобы выводить здоровье
+  //  public TextMeshProUGUI healthText;//чтобы выводить здоровье
     public TextMeshProUGUI levelText;
     public GameObject port;
    public GameObject bossHeaith;
@@ -30,8 +30,7 @@ public class play : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //healthText.text = "Health: " + health;//выводим здоровье
-        levelText.text = "Level - " + (Level.level);
+        levelText.text = "Level - " + Level.level;
     }
     public static void DamagePlayer(int damage)//урок игроку
     {

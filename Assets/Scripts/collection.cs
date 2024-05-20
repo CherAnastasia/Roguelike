@@ -23,7 +23,7 @@ public class collection : MonoBehaviour
     {
         if (collision.tag == "Player")//если это игрок
         {
-            player.collectedAmount++;//увеличиваем счетчик
+          //  player.collectedAmount++;//увеличиваем счетчик
             play.HealPlayer(healtChange);//хилим
             Destroy(gameObject);//уничтожаем обьект
         }

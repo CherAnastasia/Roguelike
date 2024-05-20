@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-//using static UnityEditor.PlayerSettings;
 
 public enum EnemyState //состояния врага
 {
@@ -31,7 +30,7 @@ public class Enemy : MonoBehaviour
    // private bool dead = false;//враг мертв
     private bool coolDownAttack = false;//время востановления атаки
     public bool notInRoom = false;
-    private Vector3 randomDir;//рандомное направление гуляния
+   //private Vector3 randomDir;//рандомное направление гуляния
     public GameObject bulletPrefab;
     public bool isBoss;
     public static float health = 8;//здоровье
@@ -168,7 +167,7 @@ public class Enemy : MonoBehaviour
         {
             play.instance.port.SetActive(true);
           play.instance.bossHeaith.SetActive(false);
-            play.instance.port.transform.position =transform.position;
+           play.instance.port.transform.position =transform.position;
         }
     }
     public void DamageBoos(int damage)//урон

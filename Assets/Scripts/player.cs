@@ -5,15 +5,15 @@ public class player : MonoBehaviour
 {
     public float speed;//скорость игрока
     Rigidbody2D rigidbody2D;//игрок
-    public TextMeshProUGUI collectedText;
-    public static int collectedAmount=0;
+ //   public TextMeshProUGUI collectedText;
+ //   public static int collectedAmount=0;
     public GameObject bulletPrefab;//пуля
     public float bulletSpeed;//скорость пули
     private float lasttFire;//последний огонь
     public float fireDelay;
     void Awake()
     {
-        collectedAmount = 0;
+       // collectedAmount = 0;
     }
     // Start is called before the first frame update
     void Start()
@@ -37,7 +37,7 @@ public class player : MonoBehaviour
         }
 
         rigidbody2D.velocity = new Vector3(horizontal*speed, vertical*speed,0);//устанавливаем скорость тела (на z перемещаться нельзя)
-        collectedText.text = "Item Collected: " + collectedAmount;//меняем значение текста (меняем количество сьеденных обьектов)
+      //  collectedText.text = "Item Collected: " + collectedAmount;//меняем значение текста (меняем количество сьеденных обьектов)
     }
 
     void Shoot(float x, float y)//метод стрельбы принимающий в себя верт и гор

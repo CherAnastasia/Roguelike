@@ -17,7 +17,7 @@ public class Level : MonoBehaviour
             if (collision.tag == "Player" && level == 1)
             {
                 SceneManager.LoadScene("BasementMain2");
-                ExperienceLevelSystem.UpdatedRecord(level);          
+                ExperienceLevelSystem.UpdatedRecord(level);  
                 level++;
             }
             else if (collision.tag == "Player" && level == 2)

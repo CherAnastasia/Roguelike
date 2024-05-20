@@ -12,7 +12,11 @@ public class Door : MonoBehaviour
    public DoorType doorType;
     public GameObject doorCollider;
     private GameObject playerr;
-    private float widthOffset =3.5f;
+    private float widthbottom =3.5f;
+    private float widthtop = 4.5f;
+    private float widthleft = 4.5f;
+    private float widthright = 4.5f;
+    // private float widthOffset = 5f;
     private void Start()
     {
          playerr = GameObject.FindGameObjectWithTag("Player");
@@ -24,16 +28,16 @@ public class Door : MonoBehaviour
             switch (doorType)
             {
                 case DoorType.bottom:
-                    playerr.transform.position = new Vector2(transform.position.x, transform.position.y - widthOffset);
+                    playerr.transform.position = new Vector2(transform.position.x, transform.position.y - widthbottom);
                     break;
                 case DoorType.left:
-                    playerr.transform.position = new Vector2(transform.position.x - widthOffset, transform.position.y);
+                    playerr.transform.position = new Vector2(transform.position.x - widthleft, transform.position.y);
                     break;
                 case DoorType.right:
-                    playerr.transform.position = new Vector2(transform.position.x + widthOffset, transform.position.y);
+                    playerr.transform.position = new Vector2(transform.position.x + widthright, transform.position.y);
                     break;
                 case DoorType.top:
-                    playerr.transform.position = new Vector2(transform.position.x, transform.position.y + widthOffset);
+                    playerr.transform.position = new Vector2(transform.position.x, transform.position.y + widthtop);
                     break;
             }
         }
