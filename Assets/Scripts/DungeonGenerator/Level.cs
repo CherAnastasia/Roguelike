@@ -20,7 +20,7 @@ public class Level : MonoBehaviour
                 ExperienceLevelSystem.UpdatedRecord(level);          
                 level++;
             }
-            if (collision.tag == "Player" && level == 2)
+            else if (collision.tag == "Player" && level == 2)
             {
                 SceneManager.LoadScene("EndLevels");
                 ExperienceLevelSystem.UpdatedRecord(level);

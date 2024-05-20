@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+//using static UnityEditor.PlayerSettings;
 
 public enum EnemyState //состояния врага
 {
@@ -34,8 +34,8 @@ public class Enemy : MonoBehaviour
     private Vector3 randomDir;//рандомное направление гуляния
     public GameObject bulletPrefab;
     public bool isBoss;
-    private static float health = 8;//здоровье
-    private static int maxHealth = 8;//максимальное здоровье
+    public static float health = 8;//здоровье
+    public static int maxHealth = 8;//максимальное здоровье
     public static float Health { get => health; set => health = value; }
     public static int MaxHealth { get => maxHealth; set => maxHealth = value; }
     // Start is called before the first frame update
@@ -67,18 +67,23 @@ public class Enemy : MonoBehaviour
             if (IsPlayerInRange(range) && currState != EnemyState.Die)//если находится в диапазоне глаза+враг жив
             {
                 currState = EnemyState.Follow;
+               // if (enemyType == EnemyType.Boss) play.instance.bossHeaith.SetActive(true);
             }
             else if (!IsPlayerInRange(range) && currState != EnemyState.Die)//если находится за диапазоном глаза+враг жив
             {
                 currState = EnemyState.Wander;
+                //if (enemyType == EnemyType.Boss) play.instance.bossHeaith.SetActive(true);
+                //else play.instance.bossHeaith.SetActive(false);
             }
             if (Vector3.Distance(transform.position, playerr.transform.position) <= attackRange) //позиция от нас до позиции игрока
             {
                 currState = EnemyState.Attack;//атакуем
+               // if (enemyType == EnemyType.Boss) play.instance.bossHeaith.SetActive(true);
             }
         }
         else
         {
+           // play.instance.bossHeaith.SetActive(false);
             currState = EnemyState.Idle;
         }
     }
@@ -118,7 +123,7 @@ public class Enemy : MonoBehaviour
     }
     void Attack()//для атаки
     {
-        if(!coolDownAttack)//если мы не востанавливаем атаку
+        if (!coolDownAttack)//если мы не востанавливаем атаку
         {
             switch(enemyType)//разные действия взависимости от врага
             {
@@ -162,12 +167,13 @@ public class Enemy : MonoBehaviour
         if(enemyType==EnemyType.Boss)
         {
             play.instance.port.SetActive(true);
+          play.instance.bossHeaith.SetActive(false);
             play.instance.port.transform.position =transform.position;
         }
-        else play.instance.port.SetActive(false);
     }
     public void DamageBoos(int damage)//урон
     {
+        play.instance.bossHeaith.SetActive(true);
         health -= damage;//уздоровья минусуем дамаг
         if (Health <= 0)//если здоровье отрицательно или равно 0
         {

@@ -73,7 +73,7 @@ public class RoomController : MonoBehaviour
             if(Level.level==1)
             LoadRoom("End", tempRoom.X, tempRoom.Y);
             else
-            LoadRoom("End2", tempRoom.X, tempRoom.Y);
+            LoadRoom("Endd", tempRoom.X, tempRoom.Y);
         }
     }
     public void LoadRoom(string name, int x, int y)//загружает сцены

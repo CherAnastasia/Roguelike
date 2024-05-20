@@ -14,12 +14,14 @@ public class play : MonoBehaviour
     public TextMeshProUGUI healthText;//чтобы выводить здоровье
     public TextMeshProUGUI levelText;
     public GameObject port;
+   public GameObject bossHeaith;
 
     // Start is called before the first frame update
     void Awake()
     {
-        if(Level.level==1)
+        if (Level.level==1)
         health = maxHealth;
+        Enemy.health = Enemy.maxHealth;
         if (instance == null)
         {
             instance = this;//экземпл€р равен этому сценарию
@@ -28,7 +30,7 @@ public class play : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthText.text = "Health: " + health;//выводим здоровье
+        //healthText.text = "Health: " + health;//выводим здоровье
         levelText.text = "Level - " + (Level.level);
     }
     public static void DamagePlayer(int damage)//урок игроку
